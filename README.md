@@ -83,3 +83,7 @@ func (r *Repo) RemoveUser(context.Context, *domain.RemoveUserRequest) (*domain.R
 ```
 
 After that, you need to complete the logic for the implement
+
+# TODO
+1. Handle function type parameters
+2. Handle interfac{} type parameters

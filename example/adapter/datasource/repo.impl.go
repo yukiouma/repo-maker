@@ -13,7 +13,11 @@ func NewRepo() domain.Repo {
 	return &Repo{}
 }
 
-func (r *Repo) CreateUser(ctx context.Context, req *domain.CreateUserRequest) (*domain.CreaetUserReply, error) {
+func (r *Repo) CreateUser(ctx context.Context, req domain.CreateUserRequest) (domain.CreaetUserReply, error) {
+	panic("Unimplemenet")
+}
+
+func (r *Repo) FindUser(ctx context.Context, id int) ([]*domain.User, error) {
 	panic("Unimplemenet")
 }
 

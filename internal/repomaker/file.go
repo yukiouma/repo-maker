@@ -105,44 +105,19 @@ func (f *File) FindMethod(m *ast.Field) (method *Method) {
 func (f *File) FindParameter(fields ...*ast.Field) (params []*Param) {
 	for _, field := range fields {
 		param := new(Param)
+		param.Kind = new(Kind)
 		if len(field.Names) > 0 {
 			param.Arg = field.Names[0].Name
 		}
 		switch t := field.Type.(type) {
 		case *ast.Ident:
-			param.Kind = &Kind{
-				TypeName: t.Name,
-			}
+			f.identHandler(param, t)
 		case *ast.SelectorExpr:
-			param.Kind = &Kind{
-				TypeName: t.Sel.Name,
-			}
-			if t.X != nil {
-				if x, ok := t.X.(*ast.Ident); ok {
-					pkgName := x.Name
-					param.Kind.PkgName = pkgName
-					if _, ok = f.Imports[pkgName]; !ok {
-						f.Imports[pkgName] = &Package{}
-					}
-				}
-			}
+			f.selectorExprHandler(param, t)
 		case *ast.StarExpr:
-			param.Kind = &Kind{
-				IsRef: true,
-			}
-			switch st := t.X.(type) {
-			case *ast.Ident:
-				param.Kind.TypeName = st.Name
-				param.Kind.PkgName = f.Pkg.Name
-			case *ast.SelectorExpr:
-				param.Kind.TypeName = st.Sel.Name
-				if st.X != nil {
-					if x, ok := st.X.(*ast.Ident); ok {
-						param.Kind.PkgName = x.Name
-					}
-				}
-			default:
-			}
+			f.starExprHandler(param, t)
+		case *ast.ArrayType:
+			f.arrayTypeHandler(param, t)
 		default:
 		}
 		params = append(params, param)

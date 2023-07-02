@@ -1,11 +1,15 @@
 package repomaker
 
 type Kind struct {
+	IsRepeat          bool
 	IsRef             bool
 	PkgName, TypeName string
 }
 
 func (k *Kind) Render() (s string) {
+	if k.IsRepeat {
+		s += "[]"
+	}
 	if k.IsRef {
 		s += "*"
 	}
