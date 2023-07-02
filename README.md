@@ -4,7 +4,7 @@ Helping you to generate the implements for the repository interfaces you defined
 
 # Installation
 ```bash
-$ go install github.com/yukiouma/repo-makercmd/repomaker@v0.1.1
+$ go install github.com/yukiouma/repo-maker/cmd/repomaker@v0.1.1
 ```
 
 # Usage
